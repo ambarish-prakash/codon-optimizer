@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA Codon Optimizer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        textarea { width: 80%; height: 100px; }
+        .output { margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+        .button-container { margin-top: 10px; }
+        button { margin: 5px; padding: 8px 15px; }
+    </style>
+    <script>
+        function copyToClipboard() {
+            var textArea = document.getElementById("optimized-sequence");
+            textArea.select();
+            document.execCommand("copy");
+            alert("Copied to clipboard!");
+        }
+
+        function resetForm() {
+            document.getElementById("sequence-form").reset();
+            document.getElementById("optimized-sequence").value = "";
+            document.getElementById("constraints-summary").innerText = "";
+            document.getElementById("objectives-summary").innerText = "";
+        }
+    </script>
+</head>
+<body>
+
+    <h2>DNA Codon Optimizer</h2>
+    
+    <form id="sequence-form" method="post">
+        <textarea name="sequence" placeholder="Enter DNA sequence here...">{{ input_sequence }}</textarea><br>
+        <div class="button-container">
+            <button type="submit">Optimize</button>
+            <button type="button" onclick="resetForm()">Reset</button>
+        </div>
+    </form>
+
+    {% if optimized_sequence %}
+    <div class="output">
+        <h3>Optimized Sequence:</h3>
+        <textarea id="optimized-sequence" readonly>{{ optimized_sequence }}</textarea><br>
+        <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <div class="output">
+        <h3>Constraints Summary:</h3>
+        <pre id="constraints-summary">{{ constraints_summary }}</pre>
+    </div>
+
+    <div class="output">
+        <h3>Objectives Summary:</h3>
+        <pre id="objectives-summary">{{ objectives_summary }}</pre>
+    </div>
+    {% endif %}
+
+</body>
+</html>
