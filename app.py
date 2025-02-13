@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template
 from dnachisel import *
 import pandas as pd
+import os
 
 app = Flask(__name__)
+PORT = int(os.getenv("PORT", 5000)) 
 
 def load_codon_usage_table(csv_path):
     df = pd.read_csv(csv_path)
@@ -57,4 +59,4 @@ def index():
     return render_template('index.html', input_sequence="", optimized_sequence="", constraints_summary="", objectives_summary="")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=PORT)
